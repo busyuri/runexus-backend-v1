@@ -1,6 +1,6 @@
 package application.controllers;
 
-import domain.models.Event;
+import infrastructure.persistence.entity.EventEntity;
 import domain.ports.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,13 +16,13 @@ public class EventController {
     private EventService eventService;
 
     @PostMapping
-    public ResponseEntity<Event> create(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.createEvent(event));
+    public ResponseEntity<EventEntity> create(@RequestBody EventEntity eventEntity) {
+        return ResponseEntity.ok(eventService.createEvent(eventEntity));
     }
 
     @PutMapping
-    public ResponseEntity<Event> update(@RequestBody Event event) {
-        return ResponseEntity.ok(eventService.updateEvent(event));
+    public ResponseEntity<EventEntity> update(@RequestBody EventEntity eventEntity) {
+        return ResponseEntity.ok(eventService.updateEvent(eventEntity));
     }
 
     @DeleteMapping("/{eventId}")
@@ -44,17 +44,17 @@ public class EventController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Event>> getAll() {
+    public ResponseEntity<List<EventEntity>> getAll() {
         return ResponseEntity.ok(eventService.getAllEvents());
     }
 
     @GetMapping("/{eventId}")
-    public ResponseEntity<Event> getById(@PathVariable Long eventId) {
+    public ResponseEntity<EventEntity> getById(@PathVariable Long eventId) {
         return ResponseEntity.ok(eventService.getEventById(eventId));
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Event>> getByUser(@PathVariable Long userId) {
+    public ResponseEntity<List<EventEntity>> getByUser(@PathVariable Long userId) {
         return ResponseEntity.ok(eventService.getAllEventsByUserId(userId));
     }
 }

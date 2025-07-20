@@ -1,39 +1,26 @@
-package domain.models;
+package application.dto;
 
 import java.time.LocalDate;
-import java.util.List;
 
-public class Entry {
+public class EntryInput {
 
-    private Long id;
     private Long userId;
     private String title;
     private String description;
     private LocalDate entryDate;
-    private List<Comment> commentList;
 
-    public Entry() {
-        this.entryDate = LocalDate.now();
+    public EntryInput() {
+        this.entryDate = LocalDate.now(); // otomatik tarih
     }
 
-    public Entry(Long id, Long userId, String title, String description, LocalDate entryDate, List<Comment> commentList) {
-        this.id = id;
+    public EntryInput(Long userId, String title, String description) {
         this.userId = userId;
         this.title = title;
         this.description = description;
-        this.entryDate = (entryDate != null) ? entryDate : LocalDate.now();
-        this.commentList = commentList;
+        this.entryDate = LocalDate.now(); // otomatik tarih
     }
 
     // Getters and Setters
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
@@ -64,14 +51,7 @@ public class Entry {
     }
 
     public void setEntryDate(LocalDate entryDate) {
-        this.entryDate = entryDate;
-    }
-
-    public List<Comment> getCommentList() {
-        return commentList;
-    }
-
-    public void setCommentList(List<Comment> commentList) {
-        this.commentList = commentList;
+        this.entryDate = (entryDate != null) ? entryDate : LocalDate.now();
     }
 }
+

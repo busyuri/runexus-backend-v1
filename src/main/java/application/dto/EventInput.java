@@ -1,43 +1,29 @@
-package domain.models;
+package application.dto;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 
-public class Event {
+public class EventInput implements Serializable {
 
-    private Long eventId;
     private Long userId;
     private String title;
     private String description;
     private int participantLimit;
-    private boolean isFull;
     private LocalDate eventDate;
-    private List<User> participantList;
 
-    public Event() {
-        this.isFull = false;
+    public EventInput() {
+        this.eventDate = LocalDate.now(); // Otomatik tarih
     }
 
-    public Event(Long eventId, Long userId, String title, String description, int participantLimit, boolean isFull, LocalDate eventDate, List<User> participantList) {
-        this.eventId = eventId;
+    public EventInput(Long userId, String title, String description, int participantLimit) {
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.participantLimit = participantLimit;
-        this.isFull = isFull;
-        this.eventDate = eventDate;
-        this.participantList = participantList;
+        this.eventDate = LocalDate.now(); // Otomatik tarih
     }
 
     // Getters and Setters
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
 
     public Long getUserId() {
         return userId;
@@ -71,27 +57,13 @@ public class Event {
         this.participantLimit = participantLimit;
     }
 
-    public boolean isFull() {
-        return isFull;
-    }
-
-    public void setFull(boolean full) {
-        isFull = full;
-    }
-
     public LocalDate getEventDate() {
         return eventDate;
     }
 
+    // setEventDate metodu ister kaldır ister LocalDate.now() sabit kalsın
     public void setEventDate(LocalDate eventDate) {
-        this.eventDate = eventDate;
-    }
-
-    public List<User> getParticipantList() {
-        return participantList;
-    }
-
-    public void setParticipantList(List<User> participantList) {
-        this.participantList = participantList;
+        this.eventDate = eventDate != null ? eventDate : LocalDate.now();
     }
 }
+

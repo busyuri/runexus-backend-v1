@@ -12,7 +12,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
         "domain",
         "infrastructure"
 })
-@EnableJpaRepositories(basePackages = "infrastructure.persistence.repositories")
+@EnableJpaRepositories(basePackages = "infrastructure.persistence.repository")
 @EntityScan(basePackages = "domain.models")
 
 public class RunexusApplication {

@@ -1,9 +1,10 @@
 package domain.ports;
 
-import domain.models.Role;
+import domain.enums.Role;
 import domain.models.User;
 
 import java.util.List;
+import java.util.Optional;
 
 
 public interface UserService {
@@ -14,8 +15,8 @@ public interface UserService {
     User changePassword(Long userId, String oldPassword, String newPassword);
 
     List<User> getAllUsers();
-    User getUserById(Long userId);
-    List<User> getUsersByRole(Role role);
-    List<User> getUsersByPace(double pace);
+    Optional<User> getUserById(Long userId);
+    List<User> getUserByRole(Role role);
+    List<User> getUserByPace(double pace);
 
 }

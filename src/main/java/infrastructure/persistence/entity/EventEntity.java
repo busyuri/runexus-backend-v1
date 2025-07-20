@@ -1,50 +1,56 @@
-package domain.models;
+package infrastructure.persistence.entity;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.List;
 
-public class Event {
+@Entity
+@Table(name = "events")
 
+public class EventEntity {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventId;
+
     private Long userId;
     private String title;
     private String description;
     private int participantLimit;
     private boolean isFull;
     private LocalDate eventDate;
-    private List<User> participantList;
 
-    public Event() {
+    @Transient
+    private List<UserEntity> participantList;
+
+    public EventEntity() {
         this.isFull = false;
     }
 
-    public Event(Long eventId, Long userId, String title, String description, int participantLimit, boolean isFull, LocalDate eventDate, List<User> participantList) {
+    public EventEntity(Long eventId, Long userId, String title, String description, int participantLimit, LocalDate eventDate) {
         this.eventId = eventId;
         this.userId = userId;
         this.title = title;
         this.description = description;
         this.participantLimit = participantLimit;
-        this.isFull = isFull;
+        this.isFull = false;
         this.eventDate = eventDate;
-        this.participantList = participantList;
     }
-
-    // Getters and Setters
 
     public Long getEventId() {
         return eventId;
     }
 
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
+    public void setEventId(Long eventid) {
+        this.eventId = eventid;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserId(Long userid) {
+        this.userId = userid;
     }
 
     public String getTitle() {
@@ -87,11 +93,11 @@ public class Event {
         this.eventDate = eventDate;
     }
 
-    public List<User> getParticipantList() {
+    public List<UserEntity> getParticipantList() {
         return participantList;
     }
 
-    public void setParticipantList(List<User> participantList) {
+    public void setParticipantList(List<UserEntity> participantList) {
         this.participantList = participantList;
     }
 }

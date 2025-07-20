@@ -1,5 +1,5 @@
 package application.controllers;
-import domain.models.User;
+import infrastructure.persistence.entity.UserEntity;
 import domain.ports.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,29 +15,29 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<UserEntity> register(@RequestBody UserEntity user) {
         return ResponseEntity.ok(userService.registerUser(user));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestParam String email, @RequestParam String password) {
+    public ResponseEntity<UserEntity> login(@RequestParam String email, @RequestParam String password) {
         return ResponseEntity.ok(userService.loginUser(email, password));
     }
 
     @PutMapping("/{userId}/password")
-    public ResponseEntity<User> changePassword(@PathVariable Long userId,
-                                               @RequestParam String oldPassword,
-                                               @RequestParam String newPassword) {
+    public ResponseEntity<UserEntity> changePassword(@PathVariable Long userId,
+                                                     @RequestParam String oldPassword,
+                                                     @RequestParam String newPassword) {
         return ResponseEntity.ok(userService.changePassword(userId, oldPassword, newPassword));
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
+    public ResponseEntity<List<UserEntity>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable Long userId) {
+    public ResponseEntity<UserEntity> getUser(@PathVariable Long userId) {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 }

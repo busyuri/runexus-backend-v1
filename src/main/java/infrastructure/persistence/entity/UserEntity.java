@@ -1,26 +1,35 @@
-package domain.models;
+package infrastructure.persistence.entity;
 
 import domain.enums.Role;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
-
-public class User {
-
+@Entity
+@Table(name = "users")
+public class UserEntity {
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
+
     private String name;
     private String surname;
     private String gender;
     private int age;
     private double pace;
     private LocalDate birthday;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
+
     private String email;
     private String password;
 
-    public User() {
+
+    public UserEntity() {
         this.role = Role.VISITOR;
     }
 
-    public User(Long userId, String name, String surname, String gender, int age, double pace, LocalDate birthday, Role role, String email, String password) {
+    public UserEntity(Long userId, String name, String surname, String gender, int age, double pace, LocalDate birthday, String email, String password) {
         this.userId = userId;
         this.name = name;
         this.surname = surname;
@@ -28,19 +37,17 @@ public class User {
         this.age = age;
         this.pace = pace;
         this.birthday = birthday;
-        this.role = role != null ? role : Role.VISITOR;
         this.email = email;
         this.password = password;
+        this.role= Role.VISITOR;
     }
-
-    // Getters and Setters
 
     public Long getUserId() {
         return userId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserid(Long userid) {
+        this.userId = userid;
     }
 
     public String getName() {

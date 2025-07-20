@@ -1,6 +1,6 @@
 package application.controllers;
 
-import domain.models.Entry;
+import infrastructure.persistence.entity.EntryEntity;
 import domain.ports.EntryService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -18,8 +18,8 @@ public class EntryController {
     private EntryService entryService;
 
     @PostMapping
-    public ResponseEntity<Entry> create(@RequestBody Entry entry) {
-        return ResponseEntity.ok(entryService.createEntry(entry));
+    public ResponseEntity<EntryEntity> create(@RequestBody EntryEntity entryEntity) {
+        return ResponseEntity.ok(entryService.createEntry(entryEntity));
     }
 
     @DeleteMapping("/{entryId}")
@@ -29,12 +29,12 @@ public class EntryController {
     }
 
     @GetMapping("/{entryId}")
-    public ResponseEntity<Entry> getById(@PathVariable Long entryId, @RequestParam Long userId) {
+    public ResponseEntity<EntryEntity> getById(@PathVariable Long entryId, @RequestParam Long userId) {
         return ResponseEntity.ok(entryService.getEntryById(entryId, userId));
     }
 
     @GetMapping
-    public ResponseEntity<List<Entry>> getAll(@RequestParam Long userId) {
+    public ResponseEntity<List<EntryEntity>> getAll(@RequestParam Long userId) {
         return ResponseEntity.ok(entryService.getAllEntries(userId));
     }
 }

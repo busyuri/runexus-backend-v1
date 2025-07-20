@@ -1,7 +1,9 @@
 package application.controllers;
 
-import domain.models.Comment;
+import infrastructure.mapper.CommentMapper;
+import infrastructure.persistence.entity.CommentEntity;
 import domain.ports.CommentService;
+import infrastructure.persistence.service.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,32 +11,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/comments")
+@RequestMapping("/comments")
 public class CommentController {
 
-    @Autowired
-    private CommentService commentService;
+    private final CommentServiceImpl commentService;
+    private final CommentMapper commentMapper;
 
-    @PostMapping
-    public ResponseEntity<Comment> addComment(@RequestBody Comment comment) {
-        return ResponseEntity.ok(commentService.addComment(comment));
+    public CommentController(CommentServiceImpl commentService, CommentMapper commentMapper) {
+        this.commentService = commentService;
+        this.commentMapper = commentMapper;
     }
 
-    @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> delete(@PathVariable Long commentId, @RequestParam Long userId) {
-        boolean deleted = commentService.deleteComment(commentId, userId);
-        return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
-    }
-
-    @PutMapping("/{commentId}/like")
-    public ResponseEntity<Void> like(@PathVariable Long commentId, @RequestParam Long userId) {
-        commentService.likeComment(commentId, userId);
-        return ResponseEntity.ok().build();
-    }
-
-    @GetMapping("/entry/{entryId}")
-    public ResponseEntity<List<Comment>> getCommentsByEntry(@PathVariable Long entryId) {
-        return ResponseEntity.ok(commentService.getCommentsByEntryId(entryId));
-    }
+    public ResponseEntity<List<Comment>>
 }
 

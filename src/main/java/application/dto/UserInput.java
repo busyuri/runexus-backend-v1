@@ -1,47 +1,32 @@
-package domain.models;
+package application.dto;
 
-import domain.enums.Role;
 import java.time.LocalDate;
 
-public class User {
+public class UserInput {
 
-    private Long userId;
     private String name;
     private String surname;
     private String gender;
     private int age;
     private double pace;
     private LocalDate birthday;
-    private Role role;
     private String email;
     private String password;
 
-    public User() {
-        this.role = Role.VISITOR;
-    }
+    public UserInput() {}
 
-    public User(Long userId, String name, String surname, String gender, int age, double pace, LocalDate birthday, Role role, String email, String password) {
-        this.userId = userId;
+    public UserInput(String name, String surname, String gender, int age, double pace, LocalDate birthday, String email, String password) {
         this.name = name;
         this.surname = surname;
         this.gender = gender;
         this.age = age;
         this.pace = pace;
         this.birthday = birthday;
-        this.role = role != null ? role : Role.VISITOR;
         this.email = email;
         this.password = password;
     }
 
     // Getters and Setters
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
 
     public String getName() {
         return name;
@@ -91,14 +76,6 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -115,3 +92,4 @@ public class User {
         this.password = password;
     }
 }
+

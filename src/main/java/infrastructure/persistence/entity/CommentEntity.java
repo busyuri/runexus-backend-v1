@@ -1,30 +1,37 @@
-package domain.models;
+package infrastructure.persistence.entity;
+
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-public class Comment {
+@Entity
+@Table(name = "comments")
+public class CommentEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private Long userId;
     private Long entryId;
     private String content;
     private LocalDateTime commentDate;
     private int likeCount;
+    // varsayım: sadece entrylere comment yazılabilir
 
-    public Comment() {
+    public CommentEntity() {
         this.commentDate = LocalDateTime.now();
         this.likeCount = 0;
     }
 
-    public Comment(Long id, Long userId, Long entryId, String content, int likeCount, LocalDateTime commentDate) {
+    public CommentEntity(Long id, Long userId, Long entryId, String content, int likeCount) {
         this.id = id;
         this.userId = userId;
         this.entryId = entryId;
         this.content = content;
-        this.commentDate = commentDate != null ? commentDate : LocalDateTime.now();
-        this.likeCount = likeCount;
+        this.commentDate = LocalDateTime.now();
+        this.likeCount = 0; // constta verip neden sonra 0
     }
-
 
     public Long getId() {
         return id;
@@ -54,8 +61,8 @@ public class Comment {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContent(String commentText) {
+        this.content = commentText;
     }
 
     public LocalDateTime getCommentDate() {
