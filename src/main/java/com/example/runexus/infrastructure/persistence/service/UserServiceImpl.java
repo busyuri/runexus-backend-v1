@@ -37,6 +37,11 @@ public class UserServiceImpl implements UserService {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+
+        if (user.getRole() == Role.VISITOR) {
+            user.setRole(Role.REGISTERED);
+        }
+
         UserEntity savedEntity = userRepository.save(userMapper.domainToEntity(user));
         return userMapper.entityToDomain(savedEntity);
     }
