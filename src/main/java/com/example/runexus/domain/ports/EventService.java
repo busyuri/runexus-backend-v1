@@ -19,6 +19,8 @@ public interface EventService {
     List<Event> getEventByUserId(Long userId);
     //new
     List<Event> findEventsByUserId(Long userId);
+    List<Event> findJoinedEventsByUserId(Long userId);
+
 
 
 

@@ -133,5 +133,15 @@ public class EventServiceImpl implements EventService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Event> findJoinedEventsByUserId(Long userId) {
+        List<EventEntity> entities = eventRepository.findJoinedEventsByUserId(userId);
+        return entities.stream()
+                .peek(entity -> entity.setParticipantCount(entity.getJoinedUsers().size()))
+                .map(eventMapper::entityToDomain)
+                .collect(Collectors.toList());
+    }
+
+
 
 }

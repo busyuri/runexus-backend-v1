@@ -76,5 +76,12 @@ public class EventController {
     public ResponseEntity<List<Event>> getEventsByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(eventService.getEventByUserId(userId));
     }
+
+    @GetMapping("/joined")
+    public ResponseEntity<List<Event>> getJoinedEvents(@RequestParam Long userId) {
+        List<Event> joinedEvents = eventService.findJoinedEventsByUserId(userId);
+        return ResponseEntity.ok(joinedEvents);
+    }
+
 }
 
