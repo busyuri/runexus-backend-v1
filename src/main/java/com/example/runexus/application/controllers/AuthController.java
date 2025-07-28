@@ -32,12 +32,22 @@ public class AuthController {
         Optional<User> userOpt = userService.loginUser(request.getEmail(), request.getPassword());
 
         if (userOpt.isEmpty()) {
-            return ResponseEntity.status(401).build(); // unauthorized
+            return ResponseEntity.status(401).build();
         }
 
-        String token = jwtService.generateToken(userOpt.get().getEmail());
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        User user = userOpt.get();
+        String token = jwtService.generateTokenWithRole(user.getEmail(), user.getRole().name());
+
+        return ResponseEntity.ok(
+                new AuthenticationResponse(
+                        token,
+                        user.getUserId(),           // 👈 userId burada!
+                        user.getName(),
+                        user.getRole().name()
+                )
+        );
     }
+
 
     @PostMapping("/register")
     public ResponseEntity<AuthenticationResponse> register(@RequestBody UserInput userInput) {
@@ -45,11 +55,23 @@ public class AuthController {
 
         User registered = userService.registerUser(user);
         if (registered == null) {
-            return ResponseEntity.status(409).build(); // e-posta zaten kayıtlı
+            return ResponseEntity.status(409).build(); // E-posta zaten kayıtlı
         }
 
-        String token = jwtService.generateToken(registered.getEmail());
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        String token = jwtService.generateTokenWithRole(
+                registered.getEmail(),
+                registered.getRole().name()
+        );
+
+        return ResponseEntity.ok(
+                new AuthenticationResponse(
+                        token,
+                        registered.getUserId(),         // 👈 Önemli: userId
+                        registered.getName(),           // 👈 Kullanıcının adı
+                        registered.getRole().name()     // 👈 Rol string olarak
+                )
+        );
     }
+
 
 }

@@ -31,9 +31,15 @@ public class CommentServiceImpl implements CommentService {
     public List<Comment> findCommentByEntryId(Long entryId) {
         return commentRepository.findByEntryId(entryId)
                 .stream()
-                .map(commentMapper::entityToDomain)
+                .map(entity -> {
+                    Comment comment = commentMapper.entityToDomain(entity);
+                    userRepository.findById(comment.getUserId())
+                            .ifPresent(user -> comment.setUserName(user.getName()));
+                    return comment;
+                })
                 .collect(Collectors.toList());
     }
+
 
     @Override
     public Comment createComment(Comment comment) {
