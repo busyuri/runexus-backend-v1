@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "events")
@@ -20,6 +22,12 @@ public class EventEntity {
     private int participantLimit;
     private boolean isFull;
     private LocalDate eventDate;
+
+    @Transient
+    private int participantCount;
+
+    @ManyToMany(mappedBy = "joinedEvents")
+    private Set<UserEntity> joinedUsers = new HashSet<>();
 
 
     public EventEntity() {
@@ -90,6 +98,22 @@ public class EventEntity {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public Set<UserEntity> getJoinedUsers() {
+        return joinedUsers;
+    }
+
+    public void setJoinedUsers(Set<UserEntity> joinedUsers) {
+        this.joinedUsers = joinedUsers;
+    }
+
+    public int getParticipantCount() {
+        return joinedUsers != null ? joinedUsers.size() : 0;
+    }
+
+    public void setParticipantCount(int participantCount) {
+        this.participantCount = participantCount;
     }
 
 }

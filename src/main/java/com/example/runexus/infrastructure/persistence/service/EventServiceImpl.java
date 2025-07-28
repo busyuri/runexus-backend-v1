@@ -105,6 +105,7 @@ public class EventServiceImpl implements EventService {
     public List<Event> getAllEvents() {
         return eventRepository.findAll()
                 .stream()
+                .peek(entity -> entity.setParticipantCount(entity.getJoinedUsers().size()))
                 .map(eventMapper::entityToDomain)
                 .collect(Collectors.toList());
     }

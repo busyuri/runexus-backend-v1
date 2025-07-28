@@ -12,6 +12,7 @@ public class Event {
     private int participantLimit;
     private boolean isFull;
     private LocalDate eventDate;
+    private int participantCount;
 
     public Event() {
         this.isFull = false;
@@ -83,5 +84,13 @@ public class Event {
 
     public void setEventDate(LocalDate eventDate) {
         this.eventDate = eventDate;
+    }
+
+    public int getParticipantCount() {
+        return participantCount;
+    }
+
+    public void setParticipantCount(int participantCount) {
+        this.participantCount = participantCount;
     }
 }
