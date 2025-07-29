@@ -32,13 +32,23 @@ public class AuthController {
         Optional<User> userOpt = userService.loginUser(request.getEmail(), request.getPassword());
 
         if (userOpt.isEmpty()) {
-
             return ResponseEntity.status(401).build(); // unauthorized
         }
 
-        String token = jwtService.generateToken(userOpt.get().getEmail());
-        return ResponseEntity.ok(new AuthenticationResponse(token));
+        User user = userOpt.get();
+        String token = jwtService.generateToken(user.getEmail());
+
+        AuthenticationResponse response = new AuthenticationResponse(
+                token,
+                user.getUserId(),      // userId alanın
+                user.getName(),        // isim
+                user.getRole().name()  // enum ise .name() ya da .toString()
+        );
+
+        return ResponseEntity.ok(response);
     }
+
+
 
 
     @PostMapping("/register")
