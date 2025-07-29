@@ -19,4 +19,6 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
     """, nativeQuery = true)
     List<EventEntity> findJoinedEventsByUserId(@Param("userId") Long userId);
 
+
 }
+

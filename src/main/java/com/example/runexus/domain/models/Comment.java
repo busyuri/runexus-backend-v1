@@ -12,7 +12,7 @@ public class Comment {
     private String content;
     private LocalDateTime commentDate;
     private int likeCount;
-    private String userName;
+
 
     private Set<Long> likedUserIds;
 
@@ -22,14 +22,16 @@ public class Comment {
         this.likeCount = 0;
     }
 
-    public Comment(Long id, Long userId, Long entryId, String content, int likeCount, LocalDateTime commentDate, String userName) {
+
+    public Comment(Long id, Long userId, Long entryId, String content, int likeCount, LocalDateTime commentDate) {
+
         this.id = id;
         this.userId = userId;
         this.entryId = entryId;
         this.content = content;
         this.commentDate = commentDate != null ? commentDate : LocalDateTime.now();
         this.likeCount = likeCount;
-        this.userName = userName;
+
         this.likedUserIds = new HashSet<>();
     }
 
@@ -82,13 +84,6 @@ public class Comment {
         this.likeCount = likeCount;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
 
     public Set<Long> getLikedUserIds() {
         return likedUserIds;

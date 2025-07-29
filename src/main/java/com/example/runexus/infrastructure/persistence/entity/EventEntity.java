@@ -12,8 +12,10 @@ import java.util.Set;
 @Table(name = "events")
 
 public class EventEntity {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long eventId;
 
     private Long userId;
@@ -115,5 +117,6 @@ public class EventEntity {
     public void setParticipantCount(int participantCount) {
         this.participantCount = participantCount;
     }
+
 
 }
