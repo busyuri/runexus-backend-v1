@@ -3,6 +3,7 @@ package com.example.runexus.config;
 import com.example.runexus.config.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -31,14 +32,18 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // auth işlemleri için açık
+                        .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/comments/**").permitAll()
                         .requestMatchers("/api/users/**").permitAll()
                         .requestMatchers("/api/entries/**").permitAll()
-                        .requestMatchers("/api/events/**").permitAll()
+
+                        .requestMatchers(HttpMethod.GET, "/api/events/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/events/**").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/events/**").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/api/events/**").authenticated()
+
                         .anyRequest().authenticated()
                 )
 
