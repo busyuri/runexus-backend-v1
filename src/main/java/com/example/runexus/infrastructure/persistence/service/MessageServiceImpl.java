@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,6 +45,7 @@ public class MessageServiceImpl implements MessageService {
         entity.setSender(sender);
         entity.setReceiver(receiver);
         entity.setSentAt(LocalDateTime.now());
+        entity.setRead(false);
 
         // 5. Kaydet
         MessageEntity saved = messageRepository.save(entity);
@@ -87,5 +89,29 @@ public class MessageServiceImpl implements MessageService {
             throw new RuntimeException("Geçersiz kullanıcı ID formatı (Long değil): " + e.getMessage());
         }
     }
+
+    @Override
+    public List<Message> getUnreadMessagesForUser(Long userId) {
+        UserEntity receiver = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Kullanıcı bulunamadı"));
+
+        List<MessageEntity> unread = messageRepository.findByReceiverAndReadFalseOrderBySentAtDesc(receiver);
+        return unread.stream()
+                .map(messageMapper::entityToDomain)
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public void markMessageAsRead(Long messageId) {
+        MessageEntity message = messageRepository.findById(messageId)
+                .orElseThrow(() -> new RuntimeException("Mesaj bulunamadı"));
+
+        message.setRead(true);
+        messageRepository.save(message);
+    }
+
+
+
 
 }

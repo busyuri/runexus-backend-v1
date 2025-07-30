@@ -35,11 +35,23 @@ public class MessageController {
         return ResponseEntity.ok(messages);
     }
 
-    @GetMapping("/has-new/{userId}")
-    public ResponseEntity<Boolean> hasNewMessages(@PathVariable Long userId) {
-        boolean hasNew = messageService.hasUnreadMessages(userId);
-        return ResponseEntity.ok(hasNew);
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Message>> getUnreadMessagesForUser(@PathVariable Long userId) {
+        List<Message> messages = messageService.getUnreadMessagesForUser(userId);
+        return ResponseEntity.ok(messages);
     }
+
+
+    @PutMapping("/{messageId}/read")
+    public ResponseEntity<Void> markAsRead(@PathVariable Long messageId) {
+        messageService.markMessageAsRead(messageId);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
 
 }
 

@@ -6,6 +6,7 @@ public class MessageInput {
     private String senderId;
     private String receiverId;
     private String content;
+    private boolean read;
 
     // Getters and Setters
 
@@ -35,6 +36,14 @@ public class MessageInput {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public boolean isRead() {
+        return read;
+    }
+
+    public void setRead(boolean read) {
+        this.read = read;
     }
 }
 

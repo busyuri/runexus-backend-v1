@@ -10,19 +10,21 @@ public class Message {
     private String content;
     private LocalDateTime sentAt;
     private boolean read;
+    private String senderName;
 
     public Message() {
         sentAt = LocalDateTime.now();
     }
 
     // Constructor
-    public Message(Long id, Long senderId, Long receiverId, String content, LocalDateTime sentAt, boolean read) {
+    public Message(Long id, Long senderId, Long receiverId, String content, LocalDateTime sentAt, boolean read, String senderName) {
         this.id = id;
         this.senderId = senderId;
         this.receiverId = receiverId;
         this.content = content;
         this.sentAt = sentAt;
         this.read = read;
+        this.senderName = senderName;
     }
 
     // Getters and Setters
@@ -73,6 +75,14 @@ public class Message {
 
     public void setRead(boolean read) {
         this.read = read;
+    }
+
+    public String getSenderName() {
+        return senderName;
+    }
+
+    public void setSenderName(String senderName) {
+        this.senderName = senderName;
     }
 }
 
